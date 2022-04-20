@@ -8,15 +8,74 @@ const colors = require("colors");
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
+app.set("view engine", "ejs");
+
+//Global variables
+let items = [];
 
 app.get("/", function(req, res) {
-  console.log("Server runnig on port 3000".bgWhite.blue);
-  res.send("Hello World"); //For testing
-  //res.sendFile(__dirname + "/index.html"); // To recive from a Form
+  //This function will abstract the number of the day between 0-6
+  // and define if we're on weekend or not, sending a different file
+  // Depending on the result.
+  // var currentDay = today.getDay();
+  // var day = "";
+  //
+  // switch (currentDay){
+  //   case 0:
+  //     day = "Sunday";
+  //     break;
+  //
+  //   case 1:
+  //     day = "Monday";
+  //     break;
+  //
+  //   case 2:
+  //     day = "Tuesday";
+  //     break;
+  //
+  //   case 3:
+  //     day = "Wendsday";
+  //     break;
+  //
+  //   case 4:
+  //     day = "Thuesday";
+  //     break;
+  //
+  //   case 5:
+  //     day = "Friday";
+  //     break;
+  //
+  //   case 6:
+  //     day = "Saturday";
+  //     break;
+  //
+  //   default:
+  //     break;
+  // }
+  let today = new Date();
+
+  let options = {
+    weekday: "long",
+    day: "numeric",
+    month: "long"
+  };
+
+  let day = today.toLocaleDateString("es-CO", options);
+
+  res.render("list", {
+    kindOfDay: day,
+    newListItems: items
+  });
+
+  // res.sendFile(__dirname + "/index.html"); // To recive from a Form
 });
 
-//app.post("/", function(req, res){
-//});
+app.post("/", function(req, res){
+  item = req.body.newItem;
+  items.push(item);
+  res.redirect("/");
+});
 
 app.listen(3000, function() {
+  console.log("Server runnig on port 3000".bgWhite.blue);
 });
