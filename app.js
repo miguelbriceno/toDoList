@@ -14,44 +14,7 @@ app.set("view engine", "ejs");
 let items = [];
 
 app.get("/", function(req, res) {
-  //This function will abstract the number of the day between 0-6
-  // and define if we're on weekend or not, sending a different file
-  // Depending on the result.
-  // var currentDay = today.getDay();
-  // var day = "";
-  //
-  // switch (currentDay){
-  //   case 0:
-  //     day = "Sunday";
-  //     break;
-  //
-  //   case 1:
-  //     day = "Monday";
-  //     break;
-  //
-  //   case 2:
-  //     day = "Tuesday";
-  //     break;
-  //
-  //   case 3:
-  //     day = "Wendsday";
-  //     break;
-  //
-  //   case 4:
-  //     day = "Thuesday";
-  //     break;
-  //
-  //   case 5:
-  //     day = "Friday";
-  //     break;
-  //
-  //   case 6:
-  //     day = "Saturday";
-  //     break;
-  //
-  //   default:
-  //     break;
-  // }
+
   let today = new Date();
 
   let options = {
@@ -75,6 +38,10 @@ app.post("/", function(req, res){
   items.push(item);
   res.redirect("/");
 });
+
+app.get("/about", (req, res) => {
+  res.render("about");
+})
 
 app.listen(3000, function() {
   console.log("Server runnig on port 3000".bgWhite.blue);
